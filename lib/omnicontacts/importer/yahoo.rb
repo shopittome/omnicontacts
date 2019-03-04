@@ -1,20 +1,20 @@
 require "omnicontacts/parse_utils"
-require "omnicontacts/middleware/oauth1"
+require "omnicontacts/middleware/oauth2"
 require "json"
 
 module OmniContacts
   module Importer
-    class Yahoo < Middleware::OAuth1
+    class Yahoo < Middleware::OAuth2
       include ParseUtils
 
-      attr_reader :auth_host, :auth_token_path, :auth_path, :access_token_path
+      attr_reader :auth_host, :authorize_path, :auth_token_path, :scope
 
       def initialize *args
         super *args
         @auth_host = 'api.login.yahoo.com'
-        @auth_token_path = '/oauth/v2/get_request_token'
-        @auth_path = '/oauth/v2/request_auth'
-        @access_token_path = '/oauth/v2/get_token'
+        @authorize_path = '/oauth2/request_auth'
+        @auth_token_path = '/oauth2/get_token'
+        @scope = 'sdct-r'
         @contacts_host = 'social.yahooapis.com'
       end
 
